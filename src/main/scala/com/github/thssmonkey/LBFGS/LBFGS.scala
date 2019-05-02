@@ -22,11 +22,9 @@ import org.apache.flink.api.scala._
 import org.apache.flink.ml.common._
 import org.apache.flink.ml.math._
 import org.apache.flink.ml.math.Breeze._
-import org.apache.flink.ml.optimization.RegularizationPenalty
 import com.github.thssmonkey.LBFGS.LBFGSIterativeSolver._
 import com.github.thssmonkey.LBFGS.LBFGSSolver._
 import com.github.thssmonkey.LBFGS.LBFGSLearningRateMethod.LBFGSLearningRateMethodTrait
-
 import scala.collection.mutable
 import breeze.linalg.{DenseVector => BreezeDenseVector}
 import breeze.optimize.{CachedDiffFunction, DiffFunction, LBFGS => BreezeLBFGS}

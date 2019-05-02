@@ -20,7 +20,6 @@ package com.github.thssmonkey.LBFGS
 
 import org.apache.flink.ml.common.LabeledVector
 import org.apache.flink.ml.math.{BLAS, Vector}
-import org.apache.flink.ml.optimization.PartialLossFunction
 
 /** Abstract class that implements some of the functionality for common loss functions
   *
@@ -64,7 +63,7 @@ trait LBFGSLossFunction extends Serializable {
 }
 
 /** Generic loss function which lets you build a loss function out of the [[PartialLossFunction]]
-  * and the [[org.apache.flink.ml.optimization.PredictionFunction]].
+  * and the [[LBFGSPredictionFunction]].
   *
   * @param partialLossFunction
   * @param predictionFunction

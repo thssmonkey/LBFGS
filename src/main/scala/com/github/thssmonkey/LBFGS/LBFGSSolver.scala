@@ -21,7 +21,6 @@ package com.github.thssmonkey.LBFGS
 import org.apache.flink.api.scala.{DataSet, _}
 import org.apache.flink.ml.common._
 import org.apache.flink.ml.math.{DenseVector, SparseVector, Vector}
-import org.apache.flink.ml.optimization.{NoRegularization, RegularizationPenalty}
 import com.github.thssmonkey.LBFGS.LBFGSIterativeSolver._
 import com.github.thssmonkey.LBFGS.LBFGSLearningRateMethod.LBFGSLearningRateMethodTrait
 

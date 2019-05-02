@@ -28,7 +28,7 @@ abstract class LBFGSPredictionFunction extends Serializable {
 }
 
 /** A linear prediction function **/
-object LinearPrediction extends LBFGSPredictionFunction {
+object LBFGSLinearPrediction extends LBFGSPredictionFunction {
   override def predict(features: Vector, weightVector: Vector): Double = {
     BLAS.dot(features, weightVector)
   }

@@ -5,7 +5,8 @@
     <modelVersion>4.0.0</modelVersion>
     <groupId>com.github.thssmonkey</groupId>
     <artifactId>LBFGS</artifactId>
-    <version>1.0.1</version>
+    <packaging>jar</packaging>
+    <version>1.0.3</version>
 
     <name>LBFGS</name>
     <description>Limited-memory BFGS (L-BFGS) is an optimization algorithm in the family of quasi-Newton methods that approximates the Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm using a limited amount of computer memory. It is a popular algorithm for parameter estimation in machine learning. The algorithm's target problem is to minimize f(x) over unconstrained values of the real-vector x where f is a differentiable scalar function.</description>
@@ -25,6 +26,11 @@
         </developer>
     </developers>
 
+    <scm>
+        <connection>scm:git:git@github.com:thssmonkey/LBFGS.git</connection>
+        <developerConnection>scm:git:git@github.com:thssmonkey/LBFGS.git</developerConnection>
+        <url>git@github.com:thssmonkey/LBFGS.git</url>
+    </scm>
 
     <distributionManagement>
         <snapshotRepository>
@@ -37,135 +43,96 @@
         </repository>
     </distributionManagement>
 
-    <scm>
-        <connection>scm:git:git@github.com:thssmonkey/LBFGS.git</connection>
-        <developerConnection>scm:git:git@github.com:thssmonkey/LBFGS.git</developerConnection>
-        <url>git@github.com:thssmonkey/LBFGS.git</url>
-    </scm>
-
     <properties>
-        <project.build.sourceEncoding>utf-8</project.build.sourceEncoding>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
-        <version.maven-source-plugin>3.0.1</version.maven-source-plugin>
-        <version.maven-javadoc-plugin>2.10.4</version.maven-javadoc-plugin>
-        <version.maven-gpg-plugin>1.6</version.maven-gpg-plugin>
+        <flink.version>1.7.1</flink.version>
+        <scala.binary.version>2.11</scala.binary.version>
+        <scala.version>2.11.12</scala.version>
+        <version.maven-source-plugin>2.2.1</version.maven-source-plugin>
+        <version.maven-javadoc-plugin>2.9.1</version.maven-javadoc-plugin>
+        <version.maven-gpg-plugin>1.5</version.maven-gpg-plugin>
     </properties>
+
+    <build>
+        <sourceDirectory>src/main/scala</sourceDirectory>
+        <testSourceDirectory>src/test/scala</testSourceDirectory>
+    </build>
 
     <profiles>
         <profile>
             <id>release</id>
             <build>
-                <pluginManagement>
-                    <plugins>
-                        <!-- Source -->
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-source-plugin</artifactId>
-                            <version>${version.maven-source-plugin}</version>
-                            <executions>
-                                <execution>
-                                    <id>attach-sources</id>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>jar-no-fork</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <!-- Javadoc -->
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-javadoc-plugin</artifactId>
-                            <version>${version.maven-javadoc-plugin}</version>
-                            <configuration>
-                                <show>private</show>
-                                <nohelp>true</nohelp>
-                                <charset>UTF-8</charset>
-                                <encoding>UTF-8</encoding>
-                                <docencoding>UTF-8</docencoding>
-                                <additionalparam>-Xdoclint:none</additionalparam>
-                            </configuration>
-                            <executions>
-                                <execution>
-                                    <id>attach-javadocs</id>
-                                    <phase>package</phase>
-                                    <goals>
-                                        <goal>jar</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <!-- GPG -->
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-gpg-plugin</artifactId>
-                            <version>${version.maven-gpg-plugin}</version>
-                            <executions>
-                                <execution>
-                                    <id>sign-artifacts</id>
-                                    <phase>verify</phase>
-                                    <goals>
-                                        <goal>sign</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <!-- Deploy -->
-                        <plugin>
-                            <artifactId>maven-deploy-plugin</artifactId>
-                            <version>2.8.2</version>
-                            <executions>
-                                <execution>
-                                    <id>default-deploy</id>
-                                    <phase>deploy</phase>
-                                    <goals>
-                                        <goal>deploy</goal>
-                                    </goals>
-                                </execution>
-                            </executions>
-                        </plugin>
-                        <!-- Sonatype staging -->
-                        <plugin>
-                            <groupId>org.sonatype.plugins</groupId>
-                            <artifactId>nexus-staging-maven-plugin</artifactId>
-                            <version>1.6.7</version>
-                            <extensions>true</extensions>
-                            <configuration>
-                                <serverId>ossrh</serverId>
-                                <nexusUrl>https://oss.sonatype.org/</nexusUrl>
-                                <autoReleaseAfterClose>true</autoReleaseAfterClose>
-                            </configuration>
-                        </plugin>
-                        <!-- Scm -->
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-scm-plugin</artifactId>
-                            <version>1.8.1</version>
-                        </plugin>
-                        <!-- Release -->
-                        <plugin>
-                            <groupId>org.apache.maven.plugins</groupId>
-                            <artifactId>maven-release-plugin</artifactId>
-                            <version>2.5.3</version>
-                            <configuration>
-                                <mavenExecutorId>forked-path</mavenExecutorId>
-                                <useReleaseProfile>false</useReleaseProfile>
-                                <arguments>-Psonatype-oss-release</arguments>
-                                <pushChanges>false</pushChanges>
-                                <localCheckout>false</localCheckout>
-                                <autoVersionSubmodules>true</autoVersionSubmodules>
-                                <checkModificationExcludes>
-                                    <checkModificationExclude>.idea/</checkModificationExclude>
-                                    <checkModificationExclude>.idea/*</checkModificationExclude>
-                                    <checkModificationExclude>.idea/libraries/*</checkModificationExclude>
-                                    <checkModificationExclude>pom.xml</checkModificationExclude>
-                                    <checkModificationExclude>release-pom.xml</checkModificationExclude>
-                                    <checkModificationExclude>*.iml</checkModificationExclude>
-                                </checkModificationExcludes>
-                            </configuration>
-                        </plugin>
-                    </plugins>
-                </pluginManagement>
+                <plugins>
+                    <!-- Source -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-source-plugin</artifactId>
+                        <version>${version.maven-source-plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-sources</id>
+                                <goals>
+                                    <goal>jar-no-fork</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Javadoc -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-javadoc-plugin</artifactId>
+                        <version>${version.maven-javadoc-plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>attach-javadocs</id>
+                                <goals>
+                                    <goal>jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- GPG -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-gpg-plugin</artifactId>
+                        <version>${version.maven-gpg-plugin}</version>
+                        <executions>
+                            <execution>
+                                <id>sign-artifacts</id>
+                                <phase>verify</phase>
+                                <goals>
+                                    <goal>sign</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Scala Compiler -->
+                    <plugin>
+                        <groupId>net.alchim31.maven</groupId>
+                        <artifactId>scala-maven-plugin</artifactId>
+                        <version>4.0.1</version>
+                        <executions>
+                            <execution>
+                                <goals>
+                                    <goal>compile</goal>
+                                    <goal>testCompile</goal>
+                                    <goal>doc-jar</goal>
+                                </goals>
+                            </execution>
+                        </executions>
+                    </plugin>
+                    <!-- Java Compiler -->
+                    <plugin>
+                        <groupId>org.apache.maven.plugins</groupId>
+                        <artifactId>maven-compiler-plugin</artifactId>
+                        <version>3.1</version>
+                        <configuration>
+                            <source>1.8</source>
+                            <target>1.8</target>
+                        </configuration>
+                    </plugin>
+                </plugins>
             </build>
         </profile>
     </profiles>
@@ -173,29 +140,23 @@
     <dependencies>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-scala_2.11</artifactId>
-            <version>1.7.1</version>
+            <artifactId>flink-scala_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-streaming-scala_2.11</artifactId>
-            <version>1.7.1</version>
+            <artifactId>flink-streaming-scala_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-clients_2.11</artifactId>
-            <version>1.7.1</version>
+            <artifactId>flink-clients_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
         </dependency>
         <dependency>
             <groupId>org.apache.flink</groupId>
-            <artifactId>flink-ml_2.11</artifactId>
-            <version>1.7.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-nop</artifactId>
-            <version>1.7.2</version>
+            <artifactId>flink-ml_${scala.binary.version}</artifactId>
+            <version>${flink.version}</version>
         </dependency>
     </dependencies>
-
 </project>
