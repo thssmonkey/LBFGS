@@ -8,7 +8,7 @@
 
 - 是一种无约束最优化算法，是解无约束非线性规划问题常用的方法，具有收敛速度快、内存开销少等优点
 
-- 算法的目标是在实变量的无约束值$$x$$上最小化$$f(x)$$
+- 算法的目标是在实变量的无约束值 x 上最小化 f(x)
 
 ## **背景**
 
@@ -36,7 +36,7 @@
 
 其它引入方式：
 
-[引入方式链接]: https://search.maven.org/artifact/com.github.thssmonkey/LBFGS/1.0.3/jar
+[引入方式链接](https://search.maven.org/artifact/com.github.thssmonkey/LBFGS/1.0.3/jar) 
 
 ### 使用：
 
@@ -123,21 +123,65 @@ object Demo extends App{
 
 ## **API**
 
+### 关键API说明：
 
+|                             API                              |                           描述                            |
+| :----------------------------------------------------------: | :-------------------------------------------------------: |
+| **optimize**(data: DataSet[LabeledVector], initialWeights: Option[Vector]): Vector |           给定数据集和初始权重，返回优化后权重            |
+| **setConvergenceThreshold**(convergenceThreshold: Double): this.type |                 设置收敛阈值，默认为1e-6                  |
+|        **setIterations**(iterations: Int): this.type         |                  设置迭代次数，默认为100                  |
+| **setLearningRateMethod**(learningRateMethod: LBFGSLearningRateMethodTrait): this.type | 设置学习率学习方法，默认为LBFGSLearningRateMethod.Default |
+| **setLossFunction**(lossFunction: LBFGSLossFunction): this.type |                 设置损失函数，默认为None                  |
+| **setRegularizationConstant**(regularizationConstant: Double): this.type |               设置正则化常数，默认为0.0001                |
+| **setRegularizationPenalty**(regularizationPenalty: RegularizationPenalty): this.type |         设置正则化惩罚项，默认为NoRegularization          |
+|         **setStepsize**(stepsize: Double): this.type         |                   设置学习率，默认为1.0                   |
+|          **setStorages**(storages: Int): this.type           |            设置LBFGS存储最近迭代次数，默认为10            |
+
+### 学习率学习方法**LearningRateMethod**参数项：
+
+|                  Default                   |      Constant       |                 Bottou(optimalInit: Double)                  |            InvScaling(decay: Double)             |                      Xu(decay: Double)                       |
+| :----------------------------------------: | :-----------------: | :----------------------------------------------------------: | :----------------------------------------------: | :----------------------------------------------------------: |
+| initialLearningRate / Math.sqrt(iteration) | initialLearningRate | 1 / (regularizationConstant * (optimalInit + iteration - 1)) | initialLearningRate / Math.pow(iteration, decay) | initialLearningRate *   Math.pow(1 + regularizationConstant * initialLearningRate * iteration, -decay) |
+
+### 损失函数**LBFGSLossFunction**参数项：
+
+损失函数由**PartialLossFunction**和**LBFGSPredictionFunction**两部分组成，即
+
+```scala
+lbfgsLossFunction = LBFGSGenericLossFunction(partialLossFunction: PartialLossFunction, predictionFunction: LBFGSPredictionFunction)
+```
+
+**PartialLossFunction**参数项：
+
+| SquaredLoss | LogisticLoss | HingeLoss |
+| :---------: | :----------: | :-------: |
+|  平方损失   | 逻辑回归损失 | 合页损失  |
+
+**LBFGSPredictionFunction**参数项：
+
+| LBFGSLinearPrediction |
+| :-------------------: |
+|       线性预测        |
+
+### 正则化惩罚项**RegularizationPenalty**参数项：
+
+| NoRegularization | L1Regularization | L2Regularization |
+| :--------------: | :--------------: | :--------------: |
+|     无正则化     |     L1正则化     |     L2正则化     |
 
 **API文档下载链接**：
 
-[LBFGS-API-LocalSite]: https://cloud.tsinghua.edu.cn/d/ac69926eec824605bbde/
+[LBFGS-API-LocalSite](https://cloud.tsinghua.edu.cn/d/ac69926eec824605bbde/) 
 
 ## **开源**
 
 **地址**：
 
-[mvnrepository仓库]: https://mvnrepository.com/artifact/com.github.thssmonkey/LBFGS
+[mvnrepository仓库](https://mvnrepository.com/artifact/com.github.thssmonkey/LBFGS)
 
 或
 
-[中央仓库]: https://search.maven.org/search?q=g:com.github.thssmonkey
+[中央仓库](https://search.maven.org/search?q=g:com.github.thssmonkey)
 
 
 
