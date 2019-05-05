@@ -86,8 +86,8 @@ object Demo extends App{
 
   val training = data.filter(_._1.replace("\"", "").toInt <= 150).map(toLabeledVector)
   val test = data.filter(_._1.replace("\"", "").toInt > 150).map(toLabeledVector)
-  val lossFunction = LBFGSGenericLossFunction(SquaredLoss, LBFGSLinearPrediction)
-  
+  val lossFunction = LBFGSGenericLossFunction(LBFGSSquaredLoss, LBFGSLinearPrediction)
+
   /**
     * 2. 创建LBFGS实例，并设置参数
     */
@@ -98,8 +98,8 @@ object Demo extends App{
     .setConvergenceThreshold(0.001)
     .setStorages(10)
 
-  val initialWeights = Some(DenseVector.zeros(3).asInstanceOf[Vector])
-  
+  val initialWeights = Some(DenseVector.zeros(3))
+
   /**
     * 3. 运行得到结果
     */
@@ -107,8 +107,8 @@ object Demo extends App{
   println(weights)
 
   test.map { l => (l, weights) }
-   	  .map(x => (x._1.vector.dot(x._2), x._1.label, x._2))
-  	  .map(x =>(SquaredLoss.loss(x._1, x._2) / 50, x._3))
+      .map(x => (x._1.vector.dot(x._2), x._1.label, x._2))
+      .map(x =>(LBFGSSquaredLoss.loss(x._1, x._2) / 50, x._3))
       .sum(0)
       .print()
 }
@@ -116,8 +116,8 @@ object Demo extends App{
 
 /**
   * result:
-  * DenseVector(0.05488324053036031, 0.2156819005580397, 0.016836151594152405)
-  * (1.8643101949719494,DenseVector(0.05488324053036031, 0.2156819005580397, 0.016836151594152405))
+  * DenseVector(0.05488324053036032, 0.2156819005580397, 0.016836151594152398)
+  * (1.8643101949719485,DenseVector(0.05488324053036032, 0.2156819005580397, 0.016836151594152398))
   */
 ```
 
@@ -133,11 +133,11 @@ object Demo extends App{
 | **setLearningRateMethod**(learningRateMethod: LBFGSLearningRateMethodTrait): this.type | 设置学习率学习方法，默认为LBFGSLearningRateMethod.Default |
 | **setLossFunction**(lossFunction: LBFGSLossFunction): this.type |                 设置损失函数，默认为None                  |
 | **setRegularizationConstant**(regularizationConstant: Double): this.type |               设置正则化常数，默认为0.0001                |
-| **setRegularizationPenalty**(regularizationPenalty: RegularizationPenalty): this.type |         设置正则化惩罚项，默认为NoRegularization          |
+| **setRegularizationPenalty**(regularizationPenalty: LBFGSRegularizationPenalty): this.type |       设置正则化惩罚项，默认为LBFGSNoRegularization       |
 |         **setStepsize**(stepsize: Double): this.type         |                   设置学习率，默认为1.0                   |
 |          **setStorages**(storages: Int): this.type           |            设置LBFGS存储最近迭代次数，默认为10            |
 
-### 学习率学习方法**LearningRateMethod**参数项：
+### 学习率学习方法**LBFGSLearningRateMethod**参数项：
 
 |                  Default                   |      Constant       |                 Bottou(optimalInit: Double)                  |            InvScaling(decay: Double)             |                      Xu(decay: Double)                       |
 | :----------------------------------------: | :-----------------: | :----------------------------------------------------------: | :----------------------------------------------: | :----------------------------------------------------------: |
@@ -145,17 +145,17 @@ object Demo extends App{
 
 ### 损失函数**LBFGSLossFunction**参数项：
 
-损失函数由**PartialLossFunction**和**LBFGSPredictionFunction**两部分组成，即
+损失函数由**LBFGSPartialLossFunction**和**LBFGSPredictionFunction**两部分组成，即
 
 ```scala
-lbfgsLossFunction = LBFGSGenericLossFunction(partialLossFunction: PartialLossFunction, predictionFunction: LBFGSPredictionFunction)
+lbfgsLossFunction = LBFGSGenericLossFunction(partialLossFunction: LBFGSPartialLossFunction, predictionFunction: LBFGSPredictionFunction)
 ```
 
-**PartialLossFunction**参数项：
+**LBFGSPartialLossFunction**参数项：
 
-| SquaredLoss | LogisticLoss | HingeLoss |
-| :---------: | :----------: | :-------: |
-|  平方损失   | 逻辑回归损失 | 合页损失  |
+| LBFGSSquaredLoss | LBFGSLogisticLoss | LBFGSHingeLoss |
+| :--------------: | :---------------: | :------------: |
+|     平方损失     |   逻辑回归损失    |    合页损失    |
 
 **LBFGSPredictionFunction**参数项：
 
@@ -163,25 +163,25 @@ lbfgsLossFunction = LBFGSGenericLossFunction(partialLossFunction: PartialLossFun
 | :-------------------: |
 |       线性预测        |
 
-### 正则化惩罚项**RegularizationPenalty**参数项：
+### 正则化惩罚项**LBFGSRegularizationPenalty**参数项：
 
-| NoRegularization | L1Regularization | L2Regularization |
-| :--------------: | :--------------: | :--------------: |
-|     无正则化     |     L1正则化     |     L2正则化     |
+| LBFGSNoRegularization | LBFGSL1Regularization | LBFGSL2Regularization |
+| :-------------------: | :-------------------: | :-------------------: |
+|       无正则化        |       L1正则化        |       L2正则化        |
 
 **API文档下载链接**：
 
-[LBFGS-API-LocalSite](https://cloud.tsinghua.edu.cn/d/ac69926eec824605bbde/) 
+[LBFGS-API-LocalSite](xxhttps://cloud.tsinghua.edu.cn/d/ac69926eec824605bbde/) 
 
 ## **开源**
 
 **地址**：
 
-[mvnrepository仓库](https://mvnrepository.com/artifact/com.github.thssmonkey/LBFGS)
+[mvnrepository仓库](xxhttps://mvnrepository.com/artifact/com.github.thssmonkey/LBFGS)
 
 或
 
-[中央仓库](https://search.maven.org/search?q=g:com.github.thssmonkey)
+[中央仓库](xxhttps://search.maven.org/search?q=g:com.github.thssmonkey)
 
 
 
