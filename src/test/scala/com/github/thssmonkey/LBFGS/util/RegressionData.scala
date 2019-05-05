@@ -23,7 +23,7 @@ import org.apache.flink.ml.math.{SparseVector, DenseVector}
 
 object RegressionData {
 
-  val expectedWeights = Array[Double](3.0094)
+  val expectedWeights = Array[Double](20.030)
   val expectedWeight0: Double = 9.8158
   val expectedSquaredResidualSum: Double = 49.7596/2
 
@@ -189,7 +189,7 @@ object RegressionData {
     LabeledVector(-1.4323, DenseVector(3.3961))
   )
 
-  val expectedRegWeights = Array[Double](0.0, 0.0, 0.0, 0.18, 0.2, 0.24)
+  val expectedRegWeights = Array[Double](0.273, 0.246, 0.248, 0.482, 0.507, 0.548)
   val expectedRegWeight0 = 0.74
 
   // Example values from scikit-learn L1 test: http://git.io/vf4V2
