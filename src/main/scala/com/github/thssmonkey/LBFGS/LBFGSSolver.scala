@@ -116,7 +116,7 @@ abstract class LBFGSSolver extends Serializable with WithParameters {
     this
   }
 
-  def setRegularizationPenalty(regularizationPenalty: RegularizationPenalty) : this.type = {
+  def setRegularizationPenalty(regularizationPenalty: LBFGSRegularizationPenalty) : this.type = {
     parameters.add(RegularizationPenaltyValue, regularizationPenalty)
     this
   }
@@ -134,8 +134,8 @@ object LBFGSSolver {
     val defaultValue = Some(0.0001) // TODO(tvas): Properly initialize this, ensure Parameter > 0!
   }
 
-  case object RegularizationPenaltyValue extends Parameter[RegularizationPenalty] {
-    val defaultValue = Some(NoRegularization)
+  case object RegularizationPenaltyValue extends Parameter[LBFGSRegularizationPenalty] {
+    val defaultValue = Some(LBFGSNoRegularization)
   }
 }
 

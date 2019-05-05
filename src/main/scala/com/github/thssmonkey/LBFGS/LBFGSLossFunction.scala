@@ -62,14 +62,14 @@ trait LBFGSLossFunction extends Serializable {
   def lossGradient(dataPoint: LabeledVector, weightVector: Vector): (Double, Vector)
 }
 
-/** Generic loss function which lets you build a loss function out of the [[PartialLossFunction]]
+/** Generic loss function which lets you build a loss function out of the [[LBFGSPartialLossFunction]]
   * and the [[LBFGSPredictionFunction]].
   *
   * @param partialLossFunction
   * @param predictionFunction
   */
 case class LBFGSGenericLossFunction(
-                                     partialLossFunction: PartialLossFunction,
+                                     partialLossFunction: LBFGSPartialLossFunction,
                                      predictionFunction: LBFGSPredictionFunction)
   extends LBFGSLossFunction {
 

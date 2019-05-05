@@ -94,7 +94,7 @@ class LBFGS extends LBFGSIterativeSolver {
                               initialWeights: Vector,
                               numberOfStorages: Int,
                               numberOfIterations: Int,
-                              regularizationPenalty: RegularizationPenalty,
+                              regularizationPenalty: LBFGSRegularizationPenalty,
                               regularizationConstant: Double,
                               learningRate: Double,
                               convergenceThreshold: Double,
@@ -119,7 +119,7 @@ class LBFGS extends LBFGSIterativeSolver {
   private class costDiffFunction(
                                   dataPoints: DataSet[LabeledVector],
                                   lossFunction: LBFGSLossFunction,
-                                  regularizationPenalty: RegularizationPenalty,
+                                  regularizationPenalty: LBFGSRegularizationPenalty,
                                   regularizationConstant: Double,
                                   learningRate: Double,
                                   learningRateMethod: LBFGSLearningRateMethodTrait,

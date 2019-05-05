@@ -21,7 +21,7 @@ package com.github.thssmonkey.LBFGS
 /** Represents loss functions which can be used with the [[LBFGSGenericLossFunction]].
   *
   */
-trait PartialLossFunction extends Serializable {
+trait LBFGSPartialLossFunction extends Serializable {
   /** Calculates the loss depending on the label and the prediction
     *
     * @param prediction The predicted value
@@ -30,7 +30,7 @@ trait PartialLossFunction extends Serializable {
     */
   def loss(prediction: Double, label: Double): Double
 
-  /** Calculates the derivative of the [[PartialLossFunction]]
+  /** Calculates the derivative of the [[LBFGSPartialLossFunction]]
     *
     * @param prediction The predicted value
     * @param label The true value
@@ -41,9 +41,9 @@ trait PartialLossFunction extends Serializable {
 
 /** Squared loss function which can be used with the [[LBFGSGenericLossFunction]]
   *
-  * The [[SquaredLoss]] function implements `1/2 (prediction - label)^2`
+  * The [[LBFGSSquaredLoss]] function implements `1/2 (prediction - label)^2`
   */
-object SquaredLoss extends PartialLossFunction {
+object LBFGSSquaredLoss extends LBFGSPartialLossFunction {
 
   /** Calculates the loss depending on the label and the prediction
     *
@@ -55,7 +55,7 @@ object SquaredLoss extends PartialLossFunction {
     0.5 * (prediction - label) * (prediction - label)
   }
 
-  /** Calculates the derivative of the [[PartialLossFunction]]
+  /** Calculates the derivative of the [[LBFGSPartialLossFunction]]
     *
     * @param prediction The predicted value
     * @param label The true value
@@ -69,10 +69,10 @@ object SquaredLoss extends PartialLossFunction {
 /** Logistic loss function which can be used with the [[LBFGSGenericLossFunction]]
   *
   *
-  * The [[LogisticLoss]] function implements `log(1 + -exp(prediction*label))`
+  * The [[LBFGSLogisticLoss]] function implements `log(1 + -exp(prediction*label))`
   * for binary classification with label in {-1, 1}
   */
-object LogisticLoss extends PartialLossFunction {
+object LBFGSLogisticLoss extends LBFGSPartialLossFunction {
 
   /** Calculates the loss depending on the label and the prediction
     *
@@ -121,10 +121,10 @@ object LogisticLoss extends PartialLossFunction {
 
 /** Hinge loss function which can be used with the [[LBFGSGenericLossFunction]]
   *
-  * The [[HingeLoss]] function implements `max(0, 1 - prediction*label)`
+  * The [[LBFGSHingeLoss]] function implements `max(0, 1 - prediction*label)`
   * for binary classification with label in {-1, 1}
   */
-object HingeLoss extends PartialLossFunction {
+object LBFGSHingeLoss extends LBFGSPartialLossFunction {
   /** Calculates the loss for a given prediction/truth pair
     *
     * @param prediction The predicted value

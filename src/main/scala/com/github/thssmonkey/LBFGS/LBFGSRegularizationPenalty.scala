@@ -31,7 +31,7 @@ import org.apache.flink.ml.math.{BLAS, Vector}
   * The regularization term, `R(w)` is added to the objective function, `f(w) = L(w) + lambda*R(w)`
   * where lambda is the regularization parameter used to tune the amount of regularization applied.
   */
-trait RegularizationPenalty extends Serializable {
+trait LBFGSRegularizationPenalty extends Serializable {
 
   /** Calculates the new weights based on the gradient and regularization penalty
     *
@@ -69,7 +69,7 @@ trait RegularizationPenalty extends Serializable {
   * with `w` being the weight vector. The function penalizes large weights,
   * favoring solutions with more small weights rather than few large ones.
   */
-object L2Regularization extends RegularizationPenalty {
+object LBFGSL2Regularization extends LBFGSRegularizationPenalty {
 
   /** Calculates the new weights based on the gradient and L2 regularization penalty
     *
@@ -121,7 +121,7 @@ object L2Regularization extends RegularizationPenalty {
   * producing sparse solutions.
   *
   */
-object L1Regularization extends RegularizationPenalty {
+object LBFGSL1Regularization extends LBFGSRegularizationPenalty {
 
   /** Calculates the new weights based on the gradient and L1 regularization penalty
     *
@@ -179,7 +179,7 @@ object L1Regularization extends RegularizationPenalty {
 /** No regularization penalty.
   *
   */
-object NoRegularization extends RegularizationPenalty {
+object LBFGSNoRegularization extends LBFGSRegularizationPenalty {
 
   /** Calculates the new weights based on the gradient
     *

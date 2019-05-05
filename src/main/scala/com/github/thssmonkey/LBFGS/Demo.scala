@@ -30,7 +30,7 @@ object Demo extends App{
 
   val training = data.filter(_._1.replace("\"", "").toInt <= 150).map(toLabeledVector)
   val test = data.filter(_._1.replace("\"", "").toInt > 150).map(toLabeledVector)
-  val lossFunction = LBFGSGenericLossFunction(SquaredLoss, LBFGSLinearPrediction)
+  val lossFunction = LBFGSGenericLossFunction(LBFGSSquaredLoss, LBFGSLinearPrediction)
 
   /**
     * 2. 创建LBFGS实例，并设置参数
@@ -42,7 +42,7 @@ object Demo extends App{
     .setConvergenceThreshold(0.001)
     .setStorages(10)
 
-  val initialWeights = Some(DenseVector.zeros(3).asInstanceOf[Vector])
+  val initialWeights = Some(DenseVector.zeros(3))
 
   /**
     * 3. 运行得到结果
@@ -52,7 +52,7 @@ object Demo extends App{
 
   test.map { l => (l, weights) }
       .map(x => (x._1.vector.dot(x._2), x._1.label, x._2))
-      .map(x =>(SquaredLoss.loss(x._1, x._2) / 50, x._3))
+      .map(x =>(LBFGSSquaredLoss.loss(x._1, x._2) / 50, x._3))
       .sum(0)
       .print()
 }
@@ -60,7 +60,7 @@ object Demo extends App{
 
 /**
   * result:
-  * DenseVector(0.05488324053036031, 0.2156819005580397, 0.016836151594152405)
-  * (1.8643101949719494,DenseVector(0.05488324053036031, 0.2156819005580397, 0.016836151594152405))
+  * DenseVector(0.05488324053036032, 0.2156819005580397, 0.016836151594152398)
+  * (1.8643101949719485,DenseVector(0.05488324053036032, 0.2156819005580397, 0.016836151594152398))
   */
 
