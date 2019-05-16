@@ -30,13 +30,13 @@
 <dependency>
   <groupId>com.github.thssmonkey</groupId>
   <artifactId>LBFGS</artifactId>
-  <version>1.0.3</version>
+  <version>1.0.4</version>
 </dependency>
 ```
 
 其它引入方式：
 
-[引入方式链接](https://search.maven.org/artifact/com.github.thssmonkey/LBFGS/1.0.3/jar) 
+[引入方式链接](https://search.maven.org/artifact/com.github.thssmonkey/LBFGS/1.0.4/jar) 
 
 ### 使用：
 
@@ -50,8 +50,8 @@ import com.github.thssmonkey.LBFGS._
 
 |     版本      | 状态 |
 | :-----------: | :--: |
-|     1.0.3     | 稳定 |
-| 1.0.1 ~ 1.0.2 | 无效 |
+|     1.0.4     | 稳定 |
+| 1.0.1 ~ 1.0.3 | 无效 |
 
 ## **Demo**
 
@@ -145,7 +145,7 @@ object Demo extends App{
 
 ### 损失函数**LBFGSLossFunction**参数项：
 
-损失函数由**LBFGSPartialLossFunction**和**LBFGSPredictionFunction**两部分组成，即
+损失函数可以单独由**LBFGSPartialLossFunction**构成，也可以由**LBFGSPartialLossFunction**和**LBFGSPredictionFunction**两部分组成，即
 
 ```scala
 lbfgsLossFunction = LBFGSGenericLossFunction(partialLossFunction: LBFGSPartialLossFunction, predictionFunction: LBFGSPredictionFunction)

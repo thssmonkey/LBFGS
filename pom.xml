@@ -6,7 +6,7 @@
     <groupId>com.github.thssmonkey</groupId>
     <artifactId>LBFGS</artifactId>
     <packaging>jar</packaging>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
 
     <name>LBFGS</name>
     <description>Limited-memory BFGS (L-BFGS) is an optimization algorithm in the family of quasi-Newton methods that approximates the Broyden–Fletcher–Goldfarb–Shanno (BFGS) algorithm using a limited amount of computer memory. It is a popular algorithm for parameter estimation in machine learning. The algorithm's target problem is to minimize f(x) over unconstrained values of the real-vector x where f is a differentiable scalar function.</description>
