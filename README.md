@@ -171,17 +171,17 @@ lbfgsLossFunction = LBFGSGenericLossFunction(partialLossFunction: LBFGSPartialLo
 
 **API文档下载链接**：
 
-[LBFGS-API-LocalSite](xxhttps://cloud.tsinghua.edu.cn/d/ac69926eec824605bbde/) 
+[LBFGS-API-LocalSite](https://cloud.tsinghua.edu.cn/d/ac69926eec824605bbde/) 
 
 ## **开源**
 
 **地址**：
 
-[mvnrepository仓库](xxhttps://mvnrepository.com/artifact/com.github.thssmonkey/LBFGS)
+[mvnrepository仓库](https://mvnrepository.com/artifact/com.github.thssmonkey/LBFGS)
 
 或
 
-[中央仓库](xxhttps://search.maven.org/search?q=g:com.github.thssmonkey)
+[中央仓库](https://search.maven.org/search?q=g:com.github.thssmonkey)
 
 
 
